@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head onload="time();gopbien();refresh()">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Thiết bị tự động báo thức theo chu kỳ giấc ngủ</title>
+	<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="icon" type="image/png" href="images/favicon.png"/>
+		<link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+		<script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link href="https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="style1.css" />
+	<script src="jquery.slim.min.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="bootstrap.min.js"></script>
+	<style type="text/css">
+		.header {
+			height: 200px;
+			background-color: #44369a;
+		}
+		.logincolor {
+			background-color: #ffffff;
+		}
+		.blue-text{
+color:blue;
+}
+.red-text{
+	color:red;
+}
+	</style>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> 
+	<!-- THANH ĐĂNG NHẬP -->
+	<nav class="z-depth-0 logincolor">
+		<div class="nav-wrapper container">
+			<a href="https://baothuctudong.com" class="brand-logo"> 
+			<img src="images/logo.png" style="width:200px;height:50px"/>
+			</a>
+			<a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons" style="color:purple">menu</i></a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down" style="font-family: 'Baloo Tammudu 2', cursive;">
+				<li class="logged-in">
+		<a href="#" class="black-text">Theo dõi & Cài đặt</a>
+				</li>
+				<li class="logged-in">
+					<a href="#" class="black-text bold modal-trigger" data-target="modal-account">Thông tin tài khoản</a>
+				</li>
+				<li class="logged-out">
+					<a href="#" class="black-text bold modal-trigger" data-target="modal-login">Đăng nhập</a>
+				</li>
+				<li class="logged-out">
+					<a href="#" class="black-text bold modal-trigger" data-target="modal-signup">Đăng ký</a>
+				</li>
+				<li class="logged-out">
+					<a href="#" class="black-text bold modal-trigger" data-target="modal-forget">Quên mật khẩu</a>
+				</li>
+		</ul>
+	</div>
+
+</nav>
+<ul class="sidenav purple lighten-2" id="mobile-demo">
+	<li class="logged-in">
+		<a href="#" class="white-text">Theo dõi & Cài đặt</a>
+				</li>
+	<li class="logged-in">
+		<a href="#" class="white-text modal-trigger" data-target="modal-account">Thông tin tài khoản</a>
+	</li>
+	<li class="logged-out">
+		<a href="#" class="white-text modal-trigger" data-target="modal-login">Đăng nhập</a>
+	</li>
+	<li class="logged-out">
+		<a href="#" class="white-text modal-trigger" data-target="modal-signup">Đăng ký</a>
+	</li>
+	<li class="logged-out">
+		<a href="#" class="white-text modal-trigger" data-target="modal-forget">Quên mật khẩu</a>
+	</li>
+</ul>
+<div class="header">
+&nbsp;	 
+<br>
+<br>
+<div class="white-text" style="top:300px;font-family: 'Baloo Tammudu 2', cursive;text-align:center">
+<h3​​​>Mừng bạn trở lại
+<h3 id="username-info"></h3>
+</h3>
+</div>
+</h3>
+</div>
+<script>
+	  $(document).ready(function(){
+    $('.sidenav').sidenav();
+  });
+</script>
+
+</head>
+<body>
+	<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+	<!-- THANH BAR -->
+<br>
+<br> 
+<ul class="nav container rounded topnav" role="tablist">
+	<li class="nav-item vertical-item">
+		<a class="nav-link active" data-toggle="pill" href="#infor" style="color:white;font-family: 'Baloo Tammudu 2', cursive;">Thông tin người dùng</a>
+	</li>
+	<li class="nav-item vertical-item">
+		<a class="nav-link" data-toggle="pill" href="#setting" style="color:white;font-family: 'Baloo Tammudu 2', cursive;">Cài đặt thiết bị</a>
+	</li>
+	<li class="nav-item vertical-item">
+		<a class="nav-link" data-toggle="pill" href="#hr" style="color:white;font-family: 'Baloo Tammudu 2', cursive;">Biểu đồ nhịp tim</a>
+	</li>
+	<li class="nav-item vertical-item">
+		<i class="material-icons" style="color:#ffffff">home</i>
+		<a href="index.html" style="color:white;font-family: 'Baloo Tammudu 2', cursive;">Quay trở về trang chủ</a>
+	</li>
+	</ul>
+	<div class="container">
+		<!-- Mục giới thiệu -->
+			<div class="tab-content">		
+	&nbsp;
+	&nbsp;
+	&nbsp;
+	&nbsp;
+				<!-- Mục thông tin người dùng -->
+				<div id="infor" class="tab-pane active" style="font-family: 'Baloo Tammudu 2', cursive">
+					<h3 style="font-family: 'Baloo Tammudu 2', cursive">Thông tin người dùng</h3>
+					<div class="abc">
+						<form id="tao-form">
+							<div class="input-field">
+								<textarea id="job" class="materialize-textarea" required></textarea>
+								<label for="content">Nghề nghiệp</label>
+							</div>
+							<div class="input-field">
+								<textarea id="age" class="materialize-textarea" required></textarea>
+								<label for="age">Độ tuổi</label>
+							</div>
+							<div class="input-field">
+								<input type="text" id="tall" required>
+								<label for="tall">Chiều cao</label>
+							</div>
+							<div class="input-field">
+								<input type="text" id="weight" required>
+								<label for="weight">Cân nặng</label>
+							</div>
+							<div class="input-field">
+								<input type="text" id="timetosleep" required>
+								<label for="timetosleep">Bạn thường ngủ vào lúc mấy giờ?</label>
+							</div>
+							<div class="input-field">
+								<input type="text" id="heartillness" required>
+								<label for="heartillness">Bệnh tim mạch đang mắc phải?</label>
+							</div>
+							<div class="input-field">
+								<input type="text" id="chatkichthich" required>
+								<label for="chatkichthich">Bạn có hay sử dụng các chất kích thích như hút thuốc, uống cà phê, trà... hay không</label>
+							</div>
+													<div class="input-field">
+								<input type="text" id="monthethao" required>
+								<label for="chatkichthich">Môn thể thao tập luyện?</label>
+							</div>
+																			<div class="input-field">
+								<input type="text" id="cuongdotapluyen" required>
+								<label for="chatkichthich">Cường độ tập luyện (số giờ/tuấn)</label>
+							</div>
+							<h> Với việc nhấn nút xác nhận, bạn đã đồng ý điều khoản sử dụng của chúng tôi: <h>
+								<p>1. Chúng tôi chỉ sử dụng dữ liệu của bạn cho mục đích đánh giá chính xác hơn trong việc chọn điểm nhịp tim báo thức<p>
+									<p>2. Dữ liệu của bạn sẽ được lên Google Firebase(Firestore), thông tin của bạn sẽ được bảo mật tuyệt đối (thông tin thêm: <a href="https://firebase.google.com/support/privacy">Điều khoản về bảo mật và an toàn của dịch vụ</a>)</p>
+										<p>3. Dữ liệu của bạn sẽ được tiếp cận bởi các tác giả của dự án, từ đó sẽ hỗ trợ bạn dễ dàng hơn trong việc chọn 
+	điểm nhịp tim báo thức và cấu hình thiết bị</p>
+							<button class="btn purple lighten-2 z-depth-0">Xác nhận</button>
+							<p id="sentdata-warning" style="display:inline"></p>
+						</form>
+					</div>
+				</div>
+					<!-- Mục biểu đồ nhịp tim -->
+				<div id="hr" class="tab-pane fade">	
+					<div id="chart" class="tab-pane active">
+						<h3 style="font-family: 'Baloo Tammudu 2', cursive" >Biểu đồ nhịp tim</h3>
+						<canvas id="myChart" width="50" height="25" class="chartjs-render-monitor" style="display;": block; width: 50px; height; 25px></canvas>
+						<canvas id="myChartax"></canvas>
+						<p  class="red-text" id="chart-error"></p>
+						<h5 id="ntn"></h5>
+						<p id="tb"></p>
+						<script>
+							var mobile = (/iphone|ipad|ipod|android|blackberry|mini|windows\sce|palm/i.test(navigator.userAgent.toLowerCase()));
+			if (mobile) {
+			document.getElementById("tb").innerHTML = "<p class='red-text'>Xoay ngang thiết bị để hiển thị chi tiết biểu đồ</p>";      
+			}
+						</script>
+					<div style="font-family: 'Baloo Tammudu 2', cursive">
+					<p>Biểu đồ nhịp tim hiển thị một cách trực quan dữ liệu nhịp tim trong giấc ngủ của bạn. Mục đích của biểu đồ này là giúp bạn có thể chọn được điểm nhịp tim báo thức phù hợp với tình trạng cơ thể.</p>
+						<h3>Cách chọn điểm nhịp tim báo thức</h3>
+						<p>Trải nghiệm khi sử dụng thiết bị hoàn toàn phụ thuộc vào cách bạn chọn điểm nhịp tim báo thức. Giá trị này nằm ở khoảng giữa của biểu đồ, sao cho không quá lớn cũng không quá nhỏ. Chọn giá trị lớn sẽ giúp bạn tỉnh táo hơn khi thức dậy, tuy nhiên giá trị càng lớn thì thiết bị càng hoạt động không ổn định. </p>
+						<p>
+						Ngoài ra, tùy thuộc vào thời gian ngủ bạn có thể chọn giá trị lớn hay nhỏ để tăng trải nghiệm sử dụng thiết bị</p>
+					</div>
+					</div>
+				</div>
+				<!-- Mục cài đặt thiết bị -->
+				<div id="setting" class="tab-pane fade"> 
+					<h3 style="font-family: 'Baloo Tammudu 2', cursive">Cài đặt thiết bị</h3>
+					<div id="set" class="tab-pane active">
+						<div style="font-family: 'Baloo Tammudu 2', cursive">Tại đây, bạn có thể cài đặt các thông số của thiết bị như chế độ ngủ trưa, chức năng nghe nhạc, điều chỉnh thời gian ngủ và nhịp tim báo thức</div>
+						<h4 style="font-family: 'Baloo Tammudu 2', cursive">Lưu ý: Thiết bị và trình duyệt cần phải kết nối chung một mạng Wifi để có thể thực hiện chức năng này</h4>
+						<script language="JavaScript">
+							var page = new String("ip");
+							function redirect(){
+								if(page.indexOf(document.forms["NameOfForm"]["NameOfInput"].value)){
+									window.location = "http://" + document.forms["NameOfForm"]["NameOfInput"].value + "/index";
+								}
+								return false;
+							}
+						</script>
+						<form name="NameOfForm" onsubmit="return redirect()">
+							<label class="input-field active" for="ip">Nhập IP hiển thị trên màn hình thiết bị</label>
+							<input type="text" minlength="7" maxlength="15" size="15" pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$" name="NameOfInput" id="ip" required/>
+							<input type="submit" value="OK" class="btn purple lighten-2 z-depth-0" />
+						</form>
+					</div>
+				</div>
+					<!-- SIGN UP MODAL -->
+					<div id="modal-signup" class="modal">
+						<div class="modal-content" style="font-family: 'Baloo Tammudu 2', cursive;">
+							<h4>Đăng ký tài khoản</h4><br>
+							<p id="signup-warning"></p>
+							<form id="signup-form">
+								<div class="input-field">
+									<input type="text" id="name" required/>
+									<label for="name">Tên của bạn</label>
+								</div>
+								<div class="input-field">
+									<input type="email" id="signup-email" required />
+									<label for="signup-email">Địa chỉ Email</label>
+								</div>
+								<div class="input-field">
+									<input type="password" id="signup-password" required />
+									<label for="signup-password">Mật khẩu</label>
+								</div>
+								<button class="btn purple lighten-2 z-depth-0">Đăng ký</button>
+							</form>
+						</div>
+					</div>
+					<!-- LOGIN MODAL -->
+					<div id="modal-login" class="modal" >
+						<div class="modal-content" style="font-family: 'Baloo Tammudu 2', cursive;">
+							<h4>Đăng nhập tài khoản</h4><br/>
+							<p id="login-warning"></p>
+							<form id="login-form">
+								<div class="input-field">
+									<input type="email" id="login-email" required />
+									<label for="login-email">Địa chỉ Email</label>
+								</div>
+								<div class="input-field">
+									<input type="password" id="login-password" required />
+									<label for="login-password">Mật khẩu</label>
+								</div>
+								<button class="btn purple lighten-2 z-depth-0">Đăng nhập</button>
+							</form>
+						</div>
+					</div>
+					<!-- ACCOUNT MODAL -->
+					<div id="modal-account" class="modal">
+						<div class="modal-content center-align" style="font-family: 'Baloo Tammudu 2', cursive;">
+							<h4>Thông tin tài khoản</h4><br />			  
+							<div>
+								Tên của bạn:
+								<p id="username-info" style="display: inline;"></p>
+							</div>
+							<div>
+								Email:
+							<p id="usermail" style="display:inline;"></p>
+							</div>
+							<div>
+								Mã UID:
+							<p id="useruid" style="display:inline"> </p>
+							<button class="btn btn-primary w3-purple" style="left:30px" onclick="copyid()">COPY</button>
+							</div>
+						
+							<div>
+								Tình trạng kích hoạt:
+								<p id="verified" style="display:inline"></p>
+							</div>
+							<div class="activated" style="display: inline;">
+							<button  class="btn purple lighten-2 z-depth-0" style="display:inline;" onclick="active()">Kích hoạt</button>
+							</div>
+							<p id="email-request"></p>
+						</div>	
+					</div>
+					<!-- QUÊN MK MODAL-->
+					<div id="modal-forget" class="modal">
+						<div class="modal-content" style="font-family: 'Baloo Tammudu 2', cursive;">
+						<h4>Quên mật khẩu</h4>
+						<form id="recovery-form">
+							<p id="recovery-warning"></p>
+							<div class="input-field">
+							<input type="email" id="recovery-email" required />
+							<label for="recovery-email">Địa chỉ Email</label>
+						</div>
+						<button class="btn purple lighten-2 z-depth-0">Khôi phục</button>
+						</div>
+					</form>
+					</div>
+					</div>
+				<!-- SIGN UP MODAL -->
+				<div id="modal-signup" class="modal">
+					<div class="modal-content" style="font-family: 'Baloo Tammudu 2', cursive;">
+						<h4>Đăng ký tài khoản</h4><br />
+						<p id="signup-warning"></p>
+						<form id="signup-form">
+							<div class="input-field">
+								<input type="text" id="name" required/>
+								<label for="name">Tên của bạn</label>
+							</div>
+							<div class="input-field">
+								<input type="email" id="signup-email" required />
+								<label for="signup-email">Địa chỉ Email</label>
+							</div>
+							<div class="input-field">
+								<input type="password" id="signup-password" required />
+								<label for="signup-password">Mật khẩu</label>
+							</div>
+							<button class="btn purple lighten-2 z-depth-0">Đăng ký</button>
+						</form>
+					</div>
+				</div>
+				<!-- LOGIN MODAL -->
+				<div id="modal-login" class="modal">
+					<div class="modal-content" style="font-family: 'Baloo Tammudu 2', cursive;">
+						<h4>Đăng nhập tài khoản</h4><br/>
+						<p id="login-warning"></p>
+						<form id="login-form">
+							<div class="input-field">
+								<input type="email" id="login-email" required />
+								<label for="login-email">Địa chỉ Email</label>
+							</div>
+							<div class="input-field">
+								<input type="password" id="login-password" required />
+								<label for="login-password">Mật khẩu</label>
+							</div>
+							<button class="btn purple lighten-2 z-depth-0">Đăng nhập</button>
+						</form>
+					</div>
+				</div>
+				<!-- ACCOUNT MODAL -->
+				<div id="modal-account" class="modal">
+					<div class="modal-content center-align" style="font-family: 'Baloo Tammudu 2', cursive;"">
+						<h4>Thông tin tài khoản</h4><br />			  
+						<div>
+							Tên của bạn:
+							<p id="username-info" style="display: inline;"></p>
+						</div>
+						<div>
+							Email:
+						<p id="usermail" style="display:inline;"></p>
+						</div>
+						<div>
+							Mã UID:
+						<p id="useruid" style="display:inline"> </p>
+						<button class="btn btn-primary w3-purple" style="left:30px" onclick="copyid()">COPY</button>
+						</div>
+					
+						<div>
+							Tình trạng kích hoạt:
+							<p id="verified" style="display:inline"></p>
+						</div>
+						<div class="activated" style="display: inline;">
+						<button  class="btn purple lighten-2 z-depth-0" style="display:inline;" onclick="active()">Kích hoạt</button>
+						</div>
+						<p id="email-request"></p>
+					</div>	
+				</div>
+				<!-- QUÊN MK MODAL-->
+				<div id="modal-forget" class="modal" style="font-family: 'Baloo Tammudu 2', cursive;">
+					<div class="modal-content">
+					<h4>Quên mật khẩu</h4>
+					<form id="recovery-form">
+						<p id="recovery-warning"></p>
+						<div class="input-field">
+						<input type="email" id="recovery-email" required />
+						<label for="recovery-email">Địa chỉ Email</label>
+					</div>
+					<button class="btn purple lighten-2 z-depth-0">Khôi phục</button>
+					</div>
+				</form>
+				</div>
+				</div>
+				<script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-app.js"></script>
+				<script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-auth.js"></script>
+				<script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-firestore.js"></script>
+				<script>
+   // Initialize Firebase
+   var config = {
+   	apiKey: "AIzaSyDJj_rZC_KSomcxBZjY_mFefRjyCwrYtSI",
+   	authDomain: "thiet-bi-ho-tro-giac-ngu.firebaseapp.com",
+   	databaseURL: "https://thiet-bi-ho-tro-giac-ngu.firebaseio.com",
+   	projectId: "thiet-bi-ho-tro-giac-ngu",
+   	storageBucket: "thiet-bi-ho-tro-giac-ngu.appspot.com",
+   	messagingSenderId: "669291356824",
+   	appId: "1:669291356824:web:4a23e64caaed60006aa6ed",
+   	measurementId: "G-9NG50MZM5V"
+   };
+   firebase.initializeApp(config);
+
+    // make auth and firestore references
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    db.settings({ timestampsInSnapshots: true });
+</script>
+<script src="scripts/auth.js"></script>
+<script src="scripts/index.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js'></script>
+<script  src="scripts/chartt.js"></script>
+
+<!-- Facebook ChatBot SDK -->
+<!-- Load Facebook SDK for JavaScript -->
+<div id="fb-root"></div>
+<script>
+  window.fbAsyncInit = function() {
+	FB.init({
+	  xfbml            : true,
+	  version          : 'v7.0'
+	});
+  };
+
+  (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<!-- Your Chat Plugin code -->
+<div class="fb-customerchat"
+  attribution=setup_tool
+  page_id="108884647343407"
+theme_color="#44369a"
+logged_in_greeting="Xin chào! Chúng tôi có thể giúp được gì cho bạn <3"
+logged_out_greeting="Xin chào! Chúng tôi có thể giúp được gì cho bạn <3">
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</div>
+<footer class="footer-mobile center-align">
+	<br>
+   <p style="top:30px; left:30px;color:#19eea7">Thiết bị tự động báo thức theo chu kỳ giấc ngủ</p>
+   <p style="top:20px; left: 30px;color:#2dcc96">Tạo bởi
+   <a href="https://facebook.com/khoatruong13" target="_blank" style="color:#2dcc96">Trương Anh Khoa</a> và
+   <a href="https://facebook.com/Traluong.16cm" target="_blank" style="color:#2dcc96">Lương Thanh Trà</a>
+   </p>
+</footer>
+</body>
+</html>
